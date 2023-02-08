@@ -5,15 +5,19 @@ const numbers = [
 // const total = numbers.reduce((total, price) => total + price);
 // console.log(total);
 
-Array.prototype.preduce = function (sum) {
-  sum = 0;
+Array.prototype.preduce = function (cb, initial) {
+  let total = initial;
   //console.log(this[0]);
   for (let i = 0; i < this.length; i++) {
-    sum = sum + this[i];
+    if (total) {
+      total = cb(total, this[i]);
+    } else {
+      total = this[i];
+    }
   }
-  return sum;
+  return total;
 };
 
-const totalP = numbers.preduce((total, price) => total + price);
+const totalP = numbers.preduce((total, price) => total * price);
 
 console.log(totalP);
